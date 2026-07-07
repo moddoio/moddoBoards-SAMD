@@ -19,7 +19,7 @@ gets its own doc under `samd/variants/<board>/`.
 1. In the Arduino IDE, open **File → Preferences**.
 2. Add this URL to **Additional Boards Manager URLs**:
    ```
-   https://raw.githubusercontent.com/moddoio/moddoBoards-SAMD/main/package_index.json
+   https://raw.githubusercontent.com/moddoio/moddoBoards-SAMD/main/package_moddo_index.json
    ```
 3. Open **Tools → Board → Boards Manager**, search for **moddo SAMD Boards**, and click **Install**.
 4. Select your board under **Tools → Board → moddo SAMD Boards**.
@@ -41,7 +41,7 @@ documented in each board's README.
 ## Repository layout
 
 ```
-package_index.json          Boards Manager index (points at the release archive)
+package_moddo_index.json    Boards Manager index (points at the release archive)
 samd/
   boards.txt                Board definitions (one block per board)
   platform.txt              Compiler and tool recipes (shared by all boards)
