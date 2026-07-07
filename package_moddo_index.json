@@ -3,10 +3,10 @@
     {
       "name": "moddo",
       "maintainer": "moddo inc.",
-      "websiteURL": "https://github.com/moddoio",
-      "email": "hi@moddo.io",
+      "websiteURL": "https://moddo.io/",
+      "email": "info@moddo.io",
       "help": {
-        "online": "https://github.com/moddoio"
+        "online": "https://github.com/moddoio/moddoBoards-SAMD"
       },
       "platforms": [
         {
