@@ -1,0 +1,13 @@
+build/
+.claude/
+.vs/
+uf2-bootloader.elf
+tmp
+*.sw?
+Makefile.user
+node_modules
+bootloaders/uf2/scripts/clean-ifaces/*.plist
+.vscode/c_cpp_properties.json
+TAGS
+dist
+platform.local.txt

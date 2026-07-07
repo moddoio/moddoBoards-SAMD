@@ -1,0 +1,125 @@
+{
+  "packages": [
+    {
+      "name": "moddo",
+      "maintainer": "moddo inc.",
+      "websiteURL": "https://github.com/moddoio",
+      "email": "hi@moddo.io",
+      "help": {
+        "online": "https://github.com/moddoio"
+      },
+      "platforms": [
+        {
+          "name": "moddo SAMD Boards",
+          "architecture": "samd",
+          "version": "0.1.0",
+          "category": "Contributed",
+          "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/0.1.0/moddo-samd-0.1.0.zip",
+          "archiveFileName": "moddo-samd-0.1.0.zip",
+          "checksum": "SHA-256:07c048c5af9d7607a02921750e6012be1520368ba4f47c13d670c38ac42caa12",
+          "size": "365290",
+          "boards": [
+            { "name": "pinch" }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "arm-none-eabi-gcc",
+              "version": "7-2017q4"
+            },
+            {
+              "packager": "arduino",
+              "name": "openocd",
+              "version": "0.10.0-arduino7"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS",
+              "version": "4.5.0"
+            },
+            {
+              "packager": "moddo",
+              "name": "bossac",
+              "version": "1.7.0-mattairtech-3"
+            },
+            {
+              "packager": "moddo",
+              "name": "CMSIS-Atmel",
+              "version": "3.49.1"
+            }
+          ]
+        }
+      ],
+      "tools": [
+        {
+          "name": "bossac",
+          "version": "1.7.0-mattairtech-3",
+          "systems": [
+            {
+              "host": "i686-mingw32",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/bossac-1.7.0-mattairtech-3-mingw32.tar.gz",
+              "archiveFileName": "bossac-1.7.0-mattairtech-3-mingw32.tar.gz",
+              "checksum": "SHA-256:ce6ce590c612dc8b18ba52df3903ba3d43416c92ef54538881cc07fdd2ef1f04",
+              "size": "325719"
+            },
+            {
+              "host": "x86_64-pc-linux-gnu",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/bossac-1.7.0-mattairtech-3-x86_64-linux-gnu.tar.gz",
+              "archiveFileName": "bossac-1.7.0-mattairtech-3-x86_64-linux-gnu.tar.gz",
+              "checksum": "SHA-256:e0801cd435a0aa08a4ccc1781cdcc1bf9ae92e248888163a1bb4dce20c00bcf9",
+              "size": "34622"
+            },
+            {
+              "host": "i686-pc-linux-gnu",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/bossac-1.7.0-mattairtech-3-i686-linux-gnu.tar.gz",
+              "archiveFileName": "bossac-1.7.0-mattairtech-3-i686-linux-gnu.tar.gz",
+              "checksum": "SHA-256:edd3bc6fd80641563dc6ca337d695fca25c2d43242172ea0418b678d4dbe0628",
+              "size": "34628"
+            },
+            {
+              "host": "x86_64-apple-darwin",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/bossac-1.7.0-mattairtech-3-x86_64-apple-darwin.tar.gz",
+              "archiveFileName": "bossac-1.7.0-mattairtech-3-x86_64-apple-darwin.tar.gz",
+              "checksum": "SHA-256:da4d4b04582f92d09e3d48a1ec4d2473b6cd01bba992c0f1f2cd7ee1008f08f8",
+              "size": "88845"
+            }
+          ]
+        },
+        {
+          "name": "CMSIS-Atmel",
+          "version": "3.49.1",
+          "systems": [
+            {
+              "host": "i686-mingw32",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/CMSIS-Atmel-3.49.1.tar.gz",
+              "archiveFileName": "CMSIS-Atmel-3.49.1.tar.gz",
+              "checksum": "SHA-256:390438009c9ee5988ee49e05cb305fb506187ee6d0070bef01f56b9a31d367a4",
+              "size": "799218"
+            },
+            {
+              "host": "x86_64-pc-linux-gnu",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/CMSIS-Atmel-3.49.1.tar.gz",
+              "archiveFileName": "CMSIS-Atmel-3.49.1.tar.gz",
+              "checksum": "SHA-256:390438009c9ee5988ee49e05cb305fb506187ee6d0070bef01f56b9a31d367a4",
+              "size": "799218"
+            },
+            {
+              "host": "i686-pc-linux-gnu",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/CMSIS-Atmel-3.49.1.tar.gz",
+              "archiveFileName": "CMSIS-Atmel-3.49.1.tar.gz",
+              "checksum": "SHA-256:390438009c9ee5988ee49e05cb305fb506187ee6d0070bef01f56b9a31d367a4",
+              "size": "799218"
+            },
+            {
+              "host": "x86_64-apple-darwin",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/CMSIS-Atmel-3.49.1.tar.gz",
+              "archiveFileName": "CMSIS-Atmel-3.49.1.tar.gz",
+              "checksum": "SHA-256:390438009c9ee5988ee49e05cb305fb506187ee6d0070bef01f56b9a31d367a4",
+              "size": "799218"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

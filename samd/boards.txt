@@ -1,0 +1,138 @@
+# Copyright (c) 2014-2017 Arduino LLC.  All right reserved.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+# Modified 2026 by moddo, https://github.com/moddoio
+
+menu.usb=USB Config
+menu.clock=Clock Source
+menu.timer=Timer PWM Frequency
+menu.float=Floating Point
+
+# =================================================================
+# moddo pinch (ATSAMD11D14A)
+# =================================================================
+pinch.name=pinch
+
+pinch.vid.0=0x04D8
+pinch.pid.0=0xE44C
+pinch.vid.1=0x04D8
+pinch.pid.1=0xE44B
+pinch.vid.2=0x04D8
+pinch.pid.2=0xE44E
+
+pinch.build.mcu=cortex-m0plus
+pinch.build.mathlib=arm_cortexM0l_math
+pinch.build.f_cpu=48000000L
+pinch.build.usb_product="pinch"
+pinch.build.usb_manufacturer="moddo inc."
+pinch.build.board=MODDO_PINCH
+pinch.build.core=arduino
+pinch.build.variant=pinch
+pinch.build.variant_system_lib=
+pinch.build.vid=0x04D8
+pinch.upload.protocol=sam-ba
+pinch.bootloader.tool=arduino:openocd
+
+pinch.menu.float.default=Print & String use auto-promoted doubles only
+pinch.menu.float.default.build.floatconfig=FLOAT_BOTH_DOUBLES_ONLY
+pinch.menu.float.print=Print uses separate singles and doubles
+pinch.menu.float.print.build.floatconfig=FLOAT_PRINT_SINGLES_DOUBLES
+pinch.menu.float.string=String uses separate singles and doubles
+pinch.menu.float.string.build.floatconfig=FLOAT_STRING_SINGLES_DOUBLES
+pinch.menu.float.both=Print & String use separate singles and doubles
+pinch.menu.float.both.build.floatconfig=FLOAT_BOTH_SINGLES_DOUBLES
+
+pinch.build.buildconfig=CONFIG_H_ENABLED
+
+pinch.menu.clock.internal=Internal Oscillator
+pinch.menu.clock.internal.build.clockconfig=CLOCKCONFIG_INTERNAL
+pinch.menu.clock.internal_usb=Internal USB Calibrated Oscillator
+pinch.menu.clock.internal_usb.build.clockconfig=CLOCKCONFIG_INTERNAL_USB
+
+pinch.menu.timer.timer_732Hz=732.4Hz (16-bit)
+pinch.menu.timer.timer_732Hz.build.timerconfig=TIMER_732Hz
+pinch.menu.timer.timer_366Hz=366.2Hz (16-bit)
+pinch.menu.timer.timer_366Hz.build.timerconfig=TIMER_366Hz
+pinch.menu.timer.timer_244Hz=244.1Hz (16-bit)
+pinch.menu.timer.timer_244Hz.build.timerconfig=TIMER_244Hz
+pinch.menu.timer.timer_183Hz=183.1Hz (16-bit)
+pinch.menu.timer.timer_183Hz.build.timerconfig=TIMER_183Hz
+pinch.menu.timer.timer_146Hz=146.5Hz (16-bit)
+pinch.menu.timer.timer_146Hz.build.timerconfig=TIMER_146Hz
+pinch.menu.timer.timer_122Hz=122.1Hz (16-bit)
+pinch.menu.timer.timer_122Hz.build.timerconfig=TIMER_122Hz
+pinch.menu.timer.timer_105Hz=104.6Hz (16-bit)
+pinch.menu.timer.timer_105Hz.build.timerconfig=TIMER_105Hz
+pinch.menu.timer.timer_81Hz=81.38Hz (16-bit)
+pinch.menu.timer.timer_81Hz.build.timerconfig=TIMER_81Hz
+pinch.menu.timer.timer_61Hz=61.04Hz (16-bit)
+pinch.menu.timer.timer_61Hz.build.timerconfig=TIMER_61Hz
+pinch.menu.timer.timer_31Hz=30.52Hz (16-bit)
+pinch.menu.timer.timer_31Hz.build.timerconfig=TIMER_31Hz
+pinch.menu.timer.timer_187500Hz=187500Hz (8-bit)
+pinch.menu.timer.timer_187500Hz.build.timerconfig=TIMER_187500Hz
+pinch.menu.timer.timer_93750Hz=93750Hz (8-bit)
+pinch.menu.timer.timer_93750Hz.build.timerconfig=TIMER_93750Hz
+pinch.menu.timer.timer_62500Hz=62500Hz (8-bit)
+pinch.menu.timer.timer_62500Hz.build.timerconfig=TIMER_62500Hz
+pinch.menu.timer.timer_37500Hz=37500Hz (8-bit)
+pinch.menu.timer.timer_37500Hz.build.timerconfig=TIMER_37500Hz
+pinch.menu.timer.timer_20833Hz=20833Hz (8-bit)
+pinch.menu.timer.timer_20833Hz.build.timerconfig=TIMER_20833Hz
+pinch.menu.timer.timer_12500Hz=12500Hz (8-bit)
+pinch.menu.timer.timer_12500Hz.build.timerconfig=TIMER_12500Hz
+pinch.menu.timer.timer_7500Hz=7500Hz (8-bit)
+pinch.menu.timer.timer_7500Hz.build.timerconfig=TIMER_7500Hz
+pinch.menu.timer.timer_4166Hz=4166Hz (8-bit)
+pinch.menu.timer.timer_4166Hz.build.timerconfig=TIMER_4166Hz
+pinch.menu.timer.timer_2930Hz=2930Hz (8-bit)
+pinch.menu.timer.timer_2930Hz.build.timerconfig=TIMER_2930Hz
+pinch.menu.timer.timer_1465Hz=1465Hz (8-bit)
+pinch.menu.timer.timer_1465Hz.build.timerconfig=TIMER_1465Hz
+
+pinch.build.extra_flags=-D__SAMD11D14AM__ {build.usb_flags} -DARM_MATH_CM0PLUS
+pinch.build.ldscript=flash_16KB.ld
+pinch.build.ldscript_path=linker_scripts/gcc/4KB_Bootloader
+pinch.build.bootloader_size=__4KB_BOOTLOADER__
+pinch.build.openocdscript=openocd_scripts/pinch.cfg
+pinch.bootloader.file=pinch/sam_ba_pinch_SAMD11D14A.bin
+
+pinch.upload.tool=bossac
+pinch.upload.tool.serial=bossac
+pinch.upload.use_1200bps_touch=true
+pinch.upload.wait_for_upload_port=true
+pinch.upload.native_usb=true
+pinch.upload.maximum_size=12288
+
+pinch.build.serialcom_uart=ONE_UART
+pinch.build.serialcom_wire=ONE_WIRE
+pinch.build.serialcom_spi=ONE_SPI
+
+# "USB (CDC & HID)" (default) uses the BOOTLOADER's USB driver via the
+# bl_cdc_export table - no USB stack is compiled into the application.
+# Serial (CDC) always works; HID composite support links in automatically
+# when the sketch uses the HID library (device then enumerates with PID
+# 0xE44E instead of the bootloader's 0xE44B). It REQUIRES the matching
+# bootloader (shipped in bootloaders/pinch/, flashed via Burn Bootloader);
+# on an older bootloader the USB port stays inert by design.
+# "USB disabled" removes USB entirely (low-power builds; Serial = Serial1).
+pinch.menu.usb.cdc=USB (CDC & HID)
+pinch.menu.usb.cdc.build.usbcom=CDC_BOOTLOADER
+pinch.menu.usb.cdc.build.pid=0xE44B
+pinch.menu.usb.cdc.build.ldscript=flash_16KB_blcdc.ld
+pinch.menu.usb.none=USB disabled
+pinch.menu.usb.none.build.usbcom=USB_DISABLED
+pinch.menu.usb.none.build.pid=0xE44C
