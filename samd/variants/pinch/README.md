@@ -4,14 +4,20 @@ A tiny Arduino-compatible board built around the **Microchip ATSAMD11D14A**
 (Cortex-M0+ at 48 MHz, **16 KB flash / 4 KB SRAM**), with native USB-C, an
 on-board RGB LED, a reset button, and a fine-pitch breakout header.
 
-- **MCU:** ATSAMD11D14A-MUT (24-pin QFN)
-- **Logic level:** 3.3 V (on-board LDO)
-- **USB:** USB-C, native full-speed (CDC serial plus optional HID)
-- **GPIO:** 15 in the Arduino pin map (D0 to D14). 12 are on the header
-  (D0 to D11) and 3 drive the RGB LED (D12 to D14).
-- **On board:** RGB LED (common-anode, active-low), reset button
-- **Header:** 16-pin, 1.27 mm pitch (J2)
-- **Debug:** SWD available on D5 (SWCLK) and D6 (SWDIO)
+## Specification
+
+| Product Name | pinch |
+|--------------|-------|
+| **Processor** | ARM Cortex-M0+ processor running at up to 48 MHz |
+| **RAM** | 4 KB SRAM |
+| **Flash** | 16 KB Flash (12 KB for sketches, 4 KB bootloader) |
+| **Interface** | GPIO Pin x15 (D0–D14)<br>Header GPIO x12 (D0–D11)<br>Analog Pin x5 (A0–A4)<br>PWM Pin x11<br>DAC x1<br>I2C x1<br>UART x2 (USB & D5/D6)<br>SPI x1 |
+| **USB** | USB-C, native full-speed (CDC serial + HID) |
+| **Onboard** | RGB LED (D12-D14)<br>Reset button<br>3.3 V LDO |
+| **Header** | 16-pin, 1.27 mm pitch |
+| **Power** | 5 V (USB-C) @ 500 mA max output<br>3.3 V (LDO) @ 300 mA max output |
+| **Debug** | SWD on D5 (SWCLK) / D6 (SWDIO) |
+| **Dimensions** | 10.5 mm x 10.9 mm (±0.2 mm)<br>0.413 in x 0.429 in (±0.008 in) |
 
 ## Pinout
 
