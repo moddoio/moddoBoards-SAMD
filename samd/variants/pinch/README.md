@@ -15,23 +15,23 @@ on-board RGB LED, a reset button, and a fine-pitch breakout header.
 
 ## Pinout
 
-| Arduino | MCU pin | Analog | PWM | Peripheral | Notes |
-|---------|---------|--------|-----|------------|-------|
-| D0  | PA15 |    | ✓ | I2C SCL           | no usable ADC |
-| D1  | PA14 |    | ✓ | I2C SDA           | no usable ADC |
-| D2  | PA09 |    | ✓ |                   | |
-| D3  | PA08 |    | ✓ |                   | |
-| D4  | PA17 |    | ✓ |                   | |
-| D5  | PA30 |    | ✓ | Serial1 TX, SWCLK | |
-| D6  | PA31 |    | ✓ | Serial1 RX, SWDIO | |
-| D7  | PA07 | A0 |   | SPI MOSI          | |
-| D8  | PA06 | A1 | ✓ | SPI MISO          | |
-| D9  | PA05 | A2 |   | SPI SCK           | |
-| D10 | PA04 | A3 |   | SPI SS            | |
-| D11 | PA02 | A4 |   | DAC0              | |
-| D12 | PA16 |    | ✓ | **LED_R / LED_BUILTIN** | RGB LED, active-low, not on header |
-| D13 | PA11 |    | ✓ | **LED_B**         | RGB LED, active-low, not on header |
-| D14 | PA10 |    | ✓ | **LED_G**         | RGB LED, active-low, not on header |
+| Arduino | MCU pin | Analog | PWM | Peripheral |
+|---------|---------|--------|-----|------------|
+| D0  | PA15 |    | ✓ | I2C SCL |
+| D1  | PA14 |    | ✓ | I2C SDA |
+| D2  | PA09 |    | ✓ | |
+| D3  | PA08 |    | ✓ | |
+| D4  | PA17 |    | ✓ | |
+| D5  | PA30 |    | ✓ | Serial1 TX, SWCLK |
+| D6  | PA31 |    | ✓ | Serial1 RX, SWDIO |
+| D7  | PA07 | A0 |   | SPI MOSI |
+| D8  | PA06 | A1 | ✓ | SPI MISO |
+| D9  | PA05 | A2 |   | SPI SCK |
+| D10 | PA04 | A3 |   | SPI SS |
+| D11 | PA02 | A4 |   | DAC0 |
+| D12 | PA16 |    | ✓ | **LED_R / LED_BUILTIN** |
+| D13 | PA11 |    | ✓ | **LED_B** |
+| D14 | PA10 |    | ✓ | **LED_G** |
 
 **PWM** — ✓ marks pins usable with `analogWrite()`; the carrier frequency is set
 by **Tools → Timer PWM Frequency** (default 732 Hz). D11 is the DAC:
