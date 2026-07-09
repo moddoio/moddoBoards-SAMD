@@ -15,6 +15,10 @@ on-board RGB LED, a reset button, and a fine-pitch breakout header.
 
 ## Pinout
 
+<img width="3100" height="3100" alt="pinchArduino_Pinout" src="https://github.com/user-attachments/assets/a51ace75-af84-4875-84de-5f7356166221" />
+
+&nbsp;
+
 | Arduino | MCU pin | Analog | PWM | Peripheral |
 |---------|---------|--------|-----|------------|
 | D0  | PA15 |    | ✓ | I2C SCL |
