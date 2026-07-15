@@ -49,20 +49,23 @@ samd/
   variants/<board>/         Per-board pin map and README
   libraries/                Bundled libraries and examples
   bootloaders/<board>/      Bootloader binary for Burn Bootloader
-  LICENSE                   LGPL-2.1
+  LICENSE                   GPL-2.0
 ```
 
 ## License
 
-Licensed under the **GNU Lesser General Public License v2.1 or later**
-(LGPL-2.1-or-later). See [LICENSE](LICENSE). Sketches you compile against this
-core are **not** covered by the LGPL; only modifications to the core itself are.
+Licensed under the **GNU General Public License, version 2** (GPL-2.0). See
+[LICENSE](LICENSE). The distribution as a whole is GPL-2.0 because it bundles the
+GPL-2.0 **USBHost** library (Circuits At Home, LTD; used by the pinch+ variant).
+The core and the Arduino LLC / MattairTech code it derives from remain LGPL-2.1 —
+which GPL-2.0 can incorporate — and those files keep their original headers.
 
 ## Credits
 
 Derived from the [Arduino SAMD core](https://github.com/arduino/ArduinoCore-samd)
 (Arduino LLC) and the [MattairTech ArduinoCore](https://github.com/mattairtech/ArduinoCore-samd),
-both LGPL-2.1. Third-party components retain their original licenses.
+both LGPL-2.1. The bundled [USBHost](samd/libraries/USBHost) library is GPL-2.0
+(Circuits At Home, LTD). Third-party components retain their original licenses.
 
 ## Links
 

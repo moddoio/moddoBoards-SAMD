@@ -169,4 +169,4 @@ This is a small MCU. Keep these in mind:
 
 ## License
 
-LGPL-2.1-or-later. See the [LICENSE](../../LICENSE) in the platform root.
+GPL-2.0. See the [LICENSE](../../LICENSE) in the platform root.
