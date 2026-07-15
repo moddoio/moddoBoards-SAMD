@@ -12,12 +12,12 @@
         {
           "name": "moddo SAMD Boards",
           "architecture": "samd",
-          "version": "0.1.0",
+          "version": "0.1.1",
           "category": "Contributed",
-          "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/0.1.0/moddo-samd-0.1.0.zip",
-          "archiveFileName": "moddo-samd-0.1.0.zip",
-          "checksum": "SHA-256:308301990966513c704f6244ec01a3266ce5395fbf12af6e088bb29126457182",
-          "size": "366934",
+          "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/0.1.1/moddo-samd-0.1.1.zip",
+          "archiveFileName": "moddo-samd-0.1.1.zip",
+          "checksum": "SHA-256:fa78267673c6c7719dd0da6ecdd1a229c3b4d620fb337b0c08360559d26d8465",
+          "size": "359328",
           "boards": [
             { "name": "pinch" }
           ],
