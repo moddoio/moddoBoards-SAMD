@@ -367,7 +367,9 @@ typedef struct _PinDescription
 } PinDescription ;
 
 #else
-// This struct MUST be 12 bytes long (elements are ordered to prevent unaligned access).
+// This struct is kept naturally aligned. ulExtInt uses the public
+// EExt_Interrupts type for compatibility with SAMD libraries that access the
+// pin-description table directly.
 typedef struct _PinDescription
 {
   uint8_t         ulPort ;	                // Must be 8 bits
@@ -377,7 +379,7 @@ typedef struct _PinDescription
   uint32_t        ulPinAttribute ;	        // Must be 32 bit bitfield
   uint8_t         ulTCChannel ;	                // Must be 8 bits
   uint8_t         ulADCChannelNumber ;	        // Must be 8 bits
-  uint8_t         ulExtInt ;	                // Must be 8 bits
+  EExt_Interrupts ulExtInt ;
   uint8_t         ulGCLKCCL ;	                // Must be 8 bits
 } PinDescription ;
 #endif

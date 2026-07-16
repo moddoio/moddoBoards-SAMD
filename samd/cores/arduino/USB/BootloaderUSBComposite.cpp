@@ -121,9 +121,10 @@ static void ctrlFlush(void)
 }
 
 /* Minimal USBDeviceClass surface used by the HID library (HID.cpp calls
- * USBDevice.sendControl / packMessages / send / armSend). Any other
- * USBDeviceClass method stays undefined, a build error on its use is
- * preferable to silently broken behavior.
+ * USBDevice.sendControl / packMessages / send / armSend) plus the power-
+ * control trio (standby/attach/detach) that ArduinoLowPower's sleep()
+ * pokes. Any OTHER USBDeviceClass method stays undefined, a build error on
+ * its use is preferable to silently broken behavior.
  */
 uint32_t USBDeviceClass::sendControl(const void* data, uint32_t len)
 {
@@ -183,6 +184,30 @@ uint32_t USBDeviceClass::armSend(uint32_t ep, const void* data, uint32_t len)
   (void)ep;
   s_ctrlSent = true;
   return s_table->usb_ep_write(data, len, 0);
+}
+
+/* Power-control trio (ArduinoLowPower's sleep() calls these around __WFI()).
+ *
+ * The bootloader owns the USB peripheral and the .bl_cdc_export ABI exposes
+ * no attach / detach / standby control, so the application genuinely cannot
+ * drive the pull-up or the run-in-standby bit through it. These are honest
+ * no-ops: on entry to STANDBY the SAMD USB peripheral loses its clock and
+ * the host sees a disconnect anyway; on wake the polled bootloader driver
+ * re-enumerates through the normal usb_is_configured() path (advanced by
+ * Serial calls / delay() / serialEventRun). They exist only to satisfy the
+ * linker and return best-effort success. */
+void USBDeviceClass::standby()
+{
+}
+
+bool USBDeviceClass::attach()
+{
+  return true;
+}
+
+bool USBDeviceClass::detach()
+{
+  return true;
 }
 
 USBDeviceClass USBDevice;
