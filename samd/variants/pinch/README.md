@@ -128,6 +128,53 @@ void loop() {
 
 For full-color output, see **File → Examples → pinch → RGB_LED**.
 
+## Deep standby
+
+pinch includes the **PinchLowPower** library for true SAMD11 standby, without
+depending on the generic `ArduinoLowPower` library. It works with either
+**Tools → USB Config** option; hardware testing shows approximately 80 µA of
+standby current with USB enabled or disabled. Choose the USB setting based on
+whether the sketch needs USB serial/HID while awake.
+
+Choose a wake pin, configure its electrical input mode, then call
+`PinchLowPower.attachInterruptWakeup(pin, mode)`. For a switch or jumper to
+GND, use `INPUT_PULLUP` and `FALLING`.
+
+```cpp
+#include <PinchLowPower.h>
+
+constexpr uint8_t WAKE_PIN = 4; // D4
+
+void setup() {
+  pinMode(WAKE_PIN, INPUT_PULLUP);
+  PinchLowPower.attachInterruptWakeup(WAKE_PIN, FALLING);
+}
+
+void loop() {
+  // Do work here.
+  PinchLowPower.deepSleep();
+}
+```
+
+An overload accepts a callback when the sketch needs one. These are the seven
+supported EIC-channel owners:
+
+| Arduino pin | MCU pin | EIC line | Test note |
+|-------------|---------|----------|-----------|
+| D4 | PA17 | EXTINT1 | Recommended default |
+| D6 | PA31 | EXTINT3 | Also SWDIO; avoid while a debug probe is attached |
+| D7 | PA07 | EXTINT7 | Header pin |
+| D8 | PA06 | EXTINT6 | Header pin |
+| D9 | PA05 | EXTINT5 | Header pin |
+| D10 | PA04 | EXTINT4 | Header pin |
+| D11 | PA02 | EXTINT2 | Header pin / DAC0 |
+
+The pins above can be tested with `INPUT_PULLUP`, `FALLING`, and
+a temporary connection to GND. Other exposed pins share an EIC channel with
+one of these owners, so they cannot be used concurrently as wake sources. D1
+is NMI-only and intentionally unsupported. See **File → Examples → pinch →
+DeepSleep** for the LED demonstration.
+
 ## Peripherals
 
 - **Serial (USB):** `Serial` (also `SerialUSB`), the USB virtual COM port.
