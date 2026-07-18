@@ -20,7 +20,7 @@
 # Modified 2026 by moddo, https://github.com/moddoio
 
 name=moddo SAMD Boards
-version=0.1.1
+version=0.2.0
 
 # Compile variables
 # -----------------
@@ -149,7 +149,7 @@ pluggable_monitor.required.serial=builtin:serial-monitor
 #
 # BOSSA
 #
-tools.bossac.path={runtime.tools.bossac-1.7.0-mattairtech-3.path}
+tools.bossac.path={runtime.tools.bossac-1.7.0-moddo-1.path}
 tools.bossac.cmd=bossac
 tools.bossac.cmd.windows=bossac.exe
 
