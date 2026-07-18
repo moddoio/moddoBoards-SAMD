@@ -12,6 +12,46 @@
         {
           "name": "moddo SAMD Boards",
           "architecture": "samd",
+          "version": "0.2.0",
+          "category": "Contributed",
+          "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/0.2.0/moddo-samd-0.2.0.zip",
+          "archiveFileName": "moddo-samd-0.2.0.zip",
+          "checksum": "SHA-256:37a11c338464ba038ec1b83006fe68033febf497f9d8ecf29c0b2dc4c761b671",
+          "size": "358098",
+          "boards": [
+            { "name": "pinch" }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "arm-none-eabi-gcc",
+              "version": "7-2017q4"
+            },
+            {
+              "packager": "arduino",
+              "name": "openocd",
+              "version": "0.10.0-arduino7"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS",
+              "version": "4.5.0"
+            },
+            {
+              "packager": "moddo",
+              "name": "bossac",
+              "version": "1.7.0-moddo-1"
+            },
+            {
+              "packager": "moddo",
+              "name": "CMSIS-Atmel",
+              "version": "3.49.1"
+            }
+          ]
+        },
+        {
+          "name": "moddo SAMD Boards",
+          "architecture": "samd",
           "version": "0.1.1",
           "category": "Contributed",
           "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/0.1.1/moddo-samd-0.1.1.zip",
@@ -51,6 +91,33 @@
         }
       ],
       "tools": [
+        {
+          "name": "bossac",
+          "version": "1.7.0-moddo-1",
+          "systems": [
+            {
+              "host": "i686-mingw32",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/bossac-1.7.0-moddo-1-mingw32.tar.gz",
+              "archiveFileName": "bossac-1.7.0-moddo-1-mingw32.tar.gz",
+              "checksum": "SHA-256:befea2cbcfc040e8aa29019c9740aa39f7e23f4ee3d7d50c063b44a80d58c097",
+              "size": "169046"
+            },
+            {
+              "host": "x86_64-pc-linux-gnu",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/bossac-1.7.0-mattairtech-3-x86_64-linux-gnu.tar.gz",
+              "archiveFileName": "bossac-1.7.0-mattairtech-3-x86_64-linux-gnu.tar.gz",
+              "checksum": "SHA-256:0ac67991d107dab1bc770e14958ca3f228cfac8430182718e092f035b5d38cd2",
+              "size": "40079"
+            },
+            {
+              "host": "arm64-apple-darwin",
+              "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/tools/bossac-1.7.0-mattairtech-3-arm64-apple-darwin.tar.gz",
+              "archiveFileName": "bossac-1.7.0-mattairtech-3-arm64-apple-darwin.tar.gz",
+              "checksum": "SHA-256:6e048c0cae83e5be021407a8d607369e5f4f90c173cbe3a61c7aca54d60fe44a",
+              "size": "36108"
+            }
+          ]
+        },
         {
           "name": "bossac",
           "version": "1.7.0-mattairtech-3",
