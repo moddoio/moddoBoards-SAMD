@@ -33,6 +33,14 @@ pinch.pid.1=0xE44B
 pinch.vid.2=0x04D8
 pinch.pid.2=0xE44E
 
+# Explicit port matchers are required when using pluggable serial discovery.
+pinch.upload_port.0.vid=0x04D8
+pinch.upload_port.0.pid=0xE44C
+pinch.upload_port.1.vid=0x04D8
+pinch.upload_port.1.pid=0xE44B
+pinch.upload_port.2.vid=0x04D8
+pinch.upload_port.2.pid=0xE44E
+
 pinch.build.mcu=cortex-m0plus
 pinch.build.mathlib=arm_cortexM0l_math
 pinch.build.f_cpu=48000000L
