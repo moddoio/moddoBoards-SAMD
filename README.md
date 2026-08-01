@@ -7,9 +7,9 @@ board, and upload sketches over native USB with no external programmer.
 
 ## Supported boards
 
-| Board | MCU | Flash / RAM | Highlights | Docs |
-|-------|-----|-------------|------------|------|
-| **pinch** | ATSAMD11D14A (Cortex-M0+, 48 MHz) | 16 KB / 4 KB | USB-C, RGB LED, reset button, 12 GPIO on a 1.27 mm header | [samd/variants/pinch/README.md](samd/variants/pinch/README.md) |
+| Board | MCU | Flash / RAM | Main hardware |
+|-------|-----|-------------|---------------|
+| **[pinch](samd/variants/pinch/README.md)** | SAMD11D14A, 48 MHz Cortex-M0+ | 16 KB / 4 KB | USB-C, RGB LED, reset button, 12 GPIO |
 
 More SAMD boards will be added as additional rows. Each shares this core and
 gets its own doc under `samd/variants/<board>/`.
@@ -56,7 +56,7 @@ samd/
 
 Licensed under the **GNU General Public License, version 2** (GPL-2.0). See
 [LICENSE](LICENSE). The distribution as a whole is GPL-2.0 because it bundles the
-GPL-2.0 **USBHost** library (Circuits At Home, LTD; used by the pinch+ variant).
+GPL-2.0 **USBHost** library (Circuits At Home, LTD).
 The core and the Arduino LLC / MattairTech code it derives from remain LGPL-2.1 —
 which GPL-2.0 can incorporate — and those files keep their original headers.
 
