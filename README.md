@@ -9,7 +9,7 @@ board, and upload sketches over native USB with no external programmer.
 
 | Board | MCU | Flash / RAM | Main hardware |
 |-------|-----|-------------|---------------|
-| **[pinch](samd/variants/pinch/README.md)** | SAMD11D14A, 48 MHz Cortex-M0+ | 16 KB / 4 KB | USB-C, RGB LED, reset button, 12 GPIO |
+| **[pinch](https://wiki.moddo.io/pinch-dev-board/QuickStart)** | SAMD11D14A, 48 MHz Cortex-M0+ | 16 KB / 4 KB | USB-C, RGB LED, reset button, 12 GPIO |
 
 More SAMD boards will be added as additional rows. Each shares this core and
 gets its own doc under `samd/variants/<board>/`.
@@ -70,3 +70,4 @@ both LGPL-2.1. The bundled [USBHost](samd/libraries/USBHost) library is GPL-2.0
 ## Links
 
 - moddo: <https://moddo.io>
+- pinch: <https://wiki.moddo.io/pinch-dev-board/Introduction>
