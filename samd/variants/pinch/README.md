@@ -137,7 +137,7 @@ standby current with USB enabled or disabled. Choose the USB setting based on
 whether the sketch needs USB serial/HID while awake.
 
 Choose a wake pin, configure its electrical input mode, then call
-`PinchLowPower.attachInterruptWakeup(pin, mode)`. For a switch or jumper to
+`LowPower.attachInterruptWakeup(pin, mode)`. For a switch or jumper to
 GND, use `INPUT_PULLUP` and `FALLING`.
 
 ```cpp
@@ -147,12 +147,12 @@ constexpr uint8_t WAKE_PIN = 4; // D4
 
 void setup() {
   pinMode(WAKE_PIN, INPUT_PULLUP);
-  PinchLowPower.attachInterruptWakeup(WAKE_PIN, FALLING);
+  LowPower.attachInterruptWakeup(WAKE_PIN, FALLING);
 }
 
 void loop() {
   // Do work here.
-  PinchLowPower.deepSleep();
+  LowPower.deepSleep();
 }
 ```
 

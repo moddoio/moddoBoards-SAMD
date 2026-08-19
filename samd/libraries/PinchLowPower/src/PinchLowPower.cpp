@@ -40,7 +40,7 @@ bool isUsableEicLine(uint32_t pin, uint32_t& eicLine)
 }
 }
 
-PinchLowPowerClass PinchLowPower;
+PinchLowPowerClass LowPower;
 
 bool PinchLowPowerClass::attachInterruptWakeup(uint32_t pin, uint32_t mode)
 {
@@ -109,12 +109,8 @@ void PinchLowPowerClass::configureEicStandbyClock()
   NVMCTRL->CTRLB.bit.SLEEPPRM = NVMCTRL_CTRLB_SLEEPPRM_DISABLED_Val;
 }
 
-bool PinchLowPowerClass::deepSleep()
+void PinchLowPowerClass::deepSleep()
 {
-  if (wakeMask_ == 0) {
-    return false;
-  }
-
   // Remove stale EIC/SysTick requests before sleeping. A level-triggered
   // wake source can legitimately reassert after this point.
   EIC->INTFLAG.reg = wakeMask_;
@@ -134,5 +130,4 @@ bool PinchLowPowerClass::deepSleep()
   SCB->SCR = savedScr;
 
   SysTick->CTRL = savedSysTick;
-  return true;
 }
