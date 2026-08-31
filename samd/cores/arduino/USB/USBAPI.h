@@ -65,7 +65,13 @@ public:
 	// USB Device API
 	void init();
 	bool attach();
+
+	// Not supported on pinch. Always returns false
 	bool detach();
+
+	// Not supported on pinch. Always returns false
+	bool end();
+
 	void setAddress(uint32_t addr);
 
 	bool configured();

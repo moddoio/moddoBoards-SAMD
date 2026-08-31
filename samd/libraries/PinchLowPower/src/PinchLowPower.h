@@ -36,15 +36,15 @@ public:
   bool attachInterruptWakeup(uint32_t pin, uint32_t mode = FALLING);
   bool attachInterruptWakeup(uint32_t pin, voidFuncPtr callback, uint32_t mode);
 
-  // Enter SAMD11 standby. Returns false until a wake source is configured.
-  bool deepSleep();
+  // Enter SAMD11 standby.
+  void deepSleep();
 
   // Alias provided for sketches that prefer the ArduinoLowPower-style name.
-  bool sleep() { return deepSleep(); }
+  void sleep() { return deepSleep(); }
 
 private:
   void configureEicStandbyClock();
   uint8_t wakeMask_ = 0;
 };
 
-extern PinchLowPowerClass PinchLowPower;
+extern PinchLowPowerClass LowPower;

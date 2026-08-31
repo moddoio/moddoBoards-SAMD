@@ -26,9 +26,9 @@ constexpr uint8_t WAKE_PIN = 4; // D4 is the default test pin.
 void setRgb(bool red, bool green, bool blue)
 {
   // pinch's RGB LED is active-low.
-  digitalWrite(PIN_LED_RED, red ? LOW : HIGH);
-  digitalWrite(PIN_LED_GREEN, green ? LOW : HIGH);
-  digitalWrite(PIN_LED_BLUE, blue ? LOW : HIGH);
+  digitalWrite(PIN_LED_RED, red ? LED_STATE_ON : !LED_STATE_ON);
+  digitalWrite(PIN_LED_GREEN, green ? LED_STATE_ON : !LED_STATE_ON);
+  digitalWrite(PIN_LED_BLUE, blue ? LED_STATE_ON : !LED_STATE_ON);
 }
 
 void flashRgbForThreeSeconds()
@@ -50,11 +50,18 @@ void setup()
   setRgb(false, false, false);
 
   pinMode(WAKE_PIN, INPUT_PULLUP);
-  PinchLowPower.attachInterruptWakeup(WAKE_PIN, FALLING);
+  bool success = LowPower.attachInterruptWakeup(WAKE_PIN, FALLING);
+  if (!success) {
+    // WAKE_PIN not interrupt capable. indicate with flashing red led
+    while(true) {
+      digitalWrite(PIN_LED_RED, LED_STATE_ON); delay(1000);
+      digitalWrite(PIN_LED_RED, !LED_STATE_ON); delay(1000);
+    }
+  }
 }
 
 void loop()
 {
   flashRgbForThreeSeconds();
-  PinchLowPower.deepSleep();
+  LowPower.deepSleep();
 }

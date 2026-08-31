@@ -207,7 +207,12 @@ bool USBDeviceClass::attach()
 
 bool USBDeviceClass::detach()
 {
-  return true;
+  return false;
+}
+
+bool USBDeviceClass::end()
+{
+  return false;
 }
 
 USBDeviceClass USBDevice;

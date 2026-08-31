@@ -151,6 +151,7 @@ extern "C"
 #define PIN_LED              PIN_LED_RED
 #define LED_BUILTIN          PIN_LED_RED
 
+#define LED_STATE_ON         (0)
 
 /*
  * Analog pins
