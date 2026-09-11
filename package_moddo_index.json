@@ -16,8 +16,8 @@
           "category": "Contributed",
           "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/0.4.0/moddo-samd-0.4.0.zip",
           "archiveFileName": "moddo-samd-0.4.0.zip",
-          "checksum": "SHA-256:a9d55c26cbd27b277a10dba51bebac9fdd808810f4e53e73f0b93c663ea69ffa",
-          "size": "371090",
+          "checksum": "SHA-256:feb2959bdfc7056f75713880233ea5ad73a1c259a11edf6a35dc9d8c459992b3",
+          "size": "379344",
           "boards": [
             { "name": "pinch" }
           ],
