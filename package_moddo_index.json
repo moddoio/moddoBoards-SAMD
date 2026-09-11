@@ -12,6 +12,46 @@
         {
           "name": "moddo SAMD Boards",
           "architecture": "samd",
+          "version": "0.4.0",
+          "category": "Contributed",
+          "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/0.4.0/moddo-samd-0.4.0.zip",
+          "archiveFileName": "moddo-samd-0.4.0.zip",
+          "checksum": "SHA-256:a9d55c26cbd27b277a10dba51bebac9fdd808810f4e53e73f0b93c663ea69ffa",
+          "size": "371090",
+          "boards": [
+            { "name": "pinch" }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "arm-none-eabi-gcc",
+              "version": "7-2017q4"
+            },
+            {
+              "packager": "arduino",
+              "name": "openocd",
+              "version": "0.10.0-arduino7"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS",
+              "version": "4.5.0"
+            },
+            {
+              "packager": "moddo",
+              "name": "bossac",
+              "version": "1.7.0-moddo-1"
+            },
+            {
+              "packager": "moddo",
+              "name": "CMSIS-Atmel",
+              "version": "3.49.1"
+            }
+          ]
+        },
+        {
+          "name": "moddo SAMD Boards",
+          "architecture": "samd",
           "version": "0.3.0",
           "category": "Contributed",
           "url": "https://github.com/moddoio/moddoBoards-SAMD/releases/download/0.3.0/moddo-samd-0.3.0.zip",
