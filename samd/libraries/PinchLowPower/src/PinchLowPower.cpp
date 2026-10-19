@@ -14,6 +14,8 @@
 
 #include "PinchLowPower.h"
 
+#include <time.h>
+
 #include <wiring_private.h>
 
 namespace
@@ -51,6 +53,17 @@ bool PinchLowPowerClass::attachInterruptWakeup(uint32_t pin,
                                                 voidFuncPtr callback,
                                                 uint32_t mode)
 {
+  if (pin > PINS_COUNT) {
+    // check for external wakeup sources
+    // RTC library should call this API to enable the alarm subsystem
+    if (pin == RTC_ALARM_WAKEUP) {
+        rtc.begin(false);
+        rtc.attachInterrupt(callback);
+        return true;
+    }
+    return false;
+  }
+
   if (mode > RISING) {
     return false;
   }
@@ -109,6 +122,25 @@ void PinchLowPowerClass::configureEicStandbyClock()
   NVMCTRL->CTRLB.bit.SLEEPPRM = NVMCTRL_CTRLB_SLEEPPRM_DISABLED_Val;
 }
 
+
+void PinchLowPowerClass::setAlarmIn(uint32_t millis) {
+
+  if (!rtc.isConfigured()) {
+    attachInterruptWakeup(RTC_ALARM_WAKEUP, NULL, 0);
+  }
+
+  struct tm tm;
+
+  rtc.getTm(&tm);
+
+  tm.tm_sec += millis/1000;
+
+  // setAlarmTm will normalize (roll seconds overflow into minutes, etc.)
+  rtc.setAlarmTm(&tm);
+
+  rtc.enableAlarm(rtc.MATCH_YYMMDDHHMMSS);
+}
+
 void PinchLowPowerClass::deepSleep()
 {
   // Remove stale EIC/SysTick requests before sleeping. A level-triggered
@@ -130,4 +162,9 @@ void PinchLowPowerClass::deepSleep()
   SCB->SCR = savedScr;
 
   SysTick->CTRL = savedSysTick;
+}
+
+void PinchLowPowerClass::deepSleep(uint32_t millis) {
+  setAlarmIn(millis);
+  deepSleep();
 }

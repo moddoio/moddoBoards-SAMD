@@ -20,6 +20,10 @@
   #error "PinchLowPower is only supported by the moddo pinch board."
 #endif
 
+#include "PinchRTC.h"
+
+#define RTC_ALARM_WAKEUP	0xFF
+
 /**
  * Deep-standby support for pinch.
  *
@@ -38,13 +42,21 @@ public:
 
   // Enter SAMD11 standby.
   void deepSleep();
+  void deepSleep(uint32_t millis);
+  void deepSleep(int millis) {
+    deepSleep((uint32_t)millis);
+  }
 
   // Alias provided for sketches that prefer the ArduinoLowPower-style name.
-  void sleep() { return deepSleep(); }
+  void sleep() { deepSleep(); }
+  void sleep(uint32_t millis) { deepSleep(millis); }
+  void sleep(int millis) { deepSleep(millis); }
 
 private:
   void configureEicStandbyClock();
+  void setAlarmIn(uint32_t millis);
   uint8_t wakeMask_ = 0;
+  PinchRTC rtc;
 };
 
 extern PinchLowPowerClass LowPower;
