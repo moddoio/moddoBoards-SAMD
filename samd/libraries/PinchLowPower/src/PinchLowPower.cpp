@@ -141,16 +141,32 @@ void PinchLowPowerClass::setAlarmIn(uint32_t millis) {
     attachInterruptWakeup(RTC_ALARM_WAKEUP, NULL, 0);
   }
 
-  struct tm tm;
+  // The RTC counts whole seconds, and an alarm matches only when the clock
+  // ticks onto it, so an alarm on the current second never fires. Round up to
+  // whole seconds, at least one.
+  int seconds = (int)(millis / 1000) + ((millis % 1000) != 0 ? 1 : 0);
+  if (seconds == 0) {
+    seconds = 1;
+  }
 
-  rtc.getTm(&tm);
+  struct tm now;
+  struct tm check;
+  do {
+    rtc.getTm(&now);
 
-  tm.tm_sec += millis/1000;
+    struct tm alarm = now;
+    alarm.tm_sec += seconds;
 
-  // setAlarmTm will normalize (roll seconds overflow into minutes, etc.)
-  rtc.setAlarmTm(&tm);
+    // setAlarmTm will normalize (roll seconds overflow into minutes, etc.)
+    rtc.setAlarmTm(&alarm);
 
-  rtc.enableAlarm(rtc.MATCH_YYMMDDHHMMSS);
+    rtc.enableAlarm(rtc.MATCH_YYMMDDHHMMSS);
+
+    // RTC writes wait on its 1 kHz clock, so a second can tick while the
+    // alarm is set, leaving it on a second that has already started. Set it
+    // again from the new time if that happened.
+    rtc.getTm(&check);
+  } while (check.tm_sec != now.tm_sec);
 }
 
 void PinchLowPowerClass::deepSleep()

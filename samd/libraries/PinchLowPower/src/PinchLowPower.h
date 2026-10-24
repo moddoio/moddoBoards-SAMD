@@ -42,6 +42,10 @@
  * tick. Count ticks in the sketch for periods longer than 1 s.
  * detachInterruptWakeup(RTC_PERIODIC_WAKEUP) stops the ticks.
  *
+ * sleep(millis) counts whole RTC seconds: it rounds up to at least one, and
+ * the first is the rest of the current second, so it sleeps between
+ * seconds - 1 and seconds. Use RTC_PERIODIC_WAKEUP for shorter sleeps.
+ *
  * The RTC, EIC and EVSYS share GCLK2 at 1024 Hz, so pin pulses shorter than
  * about 1 ms may be missed in standby.
  */
