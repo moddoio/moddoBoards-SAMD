@@ -33,6 +33,7 @@
 #define DEFAULT_SECOND  0       // 0..59
 
 voidFuncPtr RTC_callBack = NULL;
+voidFuncPtr RTC_periodicCallBack = NULL;
 
 PinchRTC::PinchRTC()
 {
@@ -60,7 +61,7 @@ void PinchRTC::begin(bool resetTime)
   }
 
   // Setup clock GCLK2 with OSC32K divided by 32
-  configureClock();
+  configureLowPowerClock();
 
   RTCdisable();
 
@@ -141,6 +142,70 @@ void PinchRTC::attachInterrupt(voidFuncPtr callback)
 void PinchRTC::detachInterrupt()
 {
   RTC_callBack = NULL;
+}
+
+void EVSYS_Handler(void)
+{
+  if (RTC_periodicCallBack != NULL) {
+    RTC_periodicCallBack();
+  }
+
+  EVSYS->INTFLAG.reg = EVSYS_INTFLAG_EVD0 | EVSYS_INTFLAG_OVR0; // must clear flag at end
+}
+
+void PinchRTC::enablePeriodicInterrupt(Periodic_Interval interval)
+{
+  if (_configured && interval <= PER_1HZ) {
+    PM->APBCMASK.reg |= PM_APBCMASK_EVSYS;
+
+    // The resynchronized path needs a channel clock to raise the EVD interrupt
+    GCLK->CLKCTRL.reg = (uint16_t)(GCLK_CLKCTRL_CLKEN | GCLK_CLKCTRL_GEN_GCLK2 | GCLK_CLKCTRL_ID(EVSYS_GCLK_ID_0));
+    while (GCLK->STATUS.bit.SYNCBUSY)
+      ;
+
+    // EVCTRL is enable-protected
+    RTCdisable();
+    RTC->MODE2.EVCTRL.reg = RTC_MODE2_EVCTRL_PEREO(1 << interval);
+    RTCenable();
+
+    EVSYS->CHANNEL.reg = EVSYS_CHANNEL_CHANNEL(0)
+        | EVSYS_CHANNEL_EVGEN(EVSYS_ID_GEN_RTC_PER_0 + interval)
+        | EVSYS_CHANNEL_PATH_RESYNCHRONIZED
+        | EVSYS_CHANNEL_EDGSEL_RISING_EDGE;
+
+    EVSYS->INTFLAG.reg = EVSYS_INTFLAG_EVD0 | EVSYS_INTFLAG_OVR0;
+    EVSYS->INTENSET.reg = EVSYS_INTENSET_EVD0;
+
+    NVIC_SetPriority(EVSYS_IRQn, 0x00);
+    NVIC_EnableIRQ(EVSYS_IRQn);
+  }
+}
+
+void PinchRTC::disablePeriodicInterrupt()
+{
+  if (_configured) {
+    EVSYS->INTENCLR.reg = EVSYS_INTENCLR_EVD0;
+    NVIC_DisableIRQ(EVSYS_IRQn);
+
+    RTCdisable();
+    RTC->MODE2.EVCTRL.reg &= ~RTC_MODE2_EVCTRL_PEREO_Msk;
+    RTCenable();
+
+    // Writing a channel with EVGEN = 0 disconnects it
+    EVSYS->CHANNEL.reg = EVSYS_CHANNEL_CHANNEL(0);
+    EVSYS->INTFLAG.reg = EVSYS_INTFLAG_EVD0 | EVSYS_INTFLAG_OVR0;
+    NVIC_ClearPendingIRQ(EVSYS_IRQn);
+  }
+}
+
+void PinchRTC::attachPeriodicInterrupt(voidFuncPtr callback)
+{
+  RTC_periodicCallBack = callback;
+}
+
+void PinchRTC::detachPeriodicInterrupt()
+{
+  RTC_periodicCallBack = NULL;
 }
 
 void PinchRTC::standbyMode()
@@ -511,14 +576,14 @@ void PinchRTC::setTm(struct tm *tm)
 }
 
 /* Attach peripheral clock to 32k oscillator */
-void PinchRTC::configureClock() {
+void PinchRTC::configureLowPowerClock() {
   GCLK->GENDIV.reg = GCLK_GENDIV_ID(2)|GCLK_GENDIV_DIV(4);
   while (GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY)
     ;
 #ifdef CRYSTALLESS
-  GCLK->GENCTRL.reg = (GCLK_GENCTRL_GENEN | GCLK_GENCTRL_SRC_OSCULP32K | GCLK_GENCTRL_ID(2) | GCLK_GENCTRL_DIVSEL );
+  GCLK->GENCTRL.reg = (GCLK_GENCTRL_GENEN | GCLK_GENCTRL_SRC_OSCULP32K | GCLK_GENCTRL_ID(2) | GCLK_GENCTRL_DIVSEL | GCLK_GENCTRL_RUNSTDBY );
 #else
-  GCLK->GENCTRL.reg = (GCLK_GENCTRL_GENEN | GCLK_GENCTRL_SRC_XOSC32K | GCLK_GENCTRL_ID(2) | GCLK_GENCTRL_DIVSEL );
+  GCLK->GENCTRL.reg = (GCLK_GENCTRL_GENEN | GCLK_GENCTRL_SRC_XOSC32K | GCLK_GENCTRL_ID(2) | GCLK_GENCTRL_DIVSEL | GCLK_GENCTRL_RUNSTDBY );
 #endif
   while (GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY)
     ;

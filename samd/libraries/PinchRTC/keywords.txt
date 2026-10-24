@@ -51,8 +51,22 @@ setAlarmTime	KEYWORD2
 enableAlarm	KEYWORD2
 disableAlarm	KEYWORD2
 
+enablePeriodicInterrupt	KEYWORD2
+disablePeriodicInterrupt	KEYWORD2
+attachPeriodicInterrupt	KEYWORD2
+detachPeriodicInterrupt	KEYWORD2
+
 standbyMode	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
+
+PER_128HZ	LITERAL1
+PER_64HZ	LITERAL1
+PER_32HZ	LITERAL1
+PER_16HZ	LITERAL1
+PER_8HZ	LITERAL1
+PER_4HZ	LITERAL1
+PER_2HZ	LITERAL1
+PER_1HZ	LITERAL1

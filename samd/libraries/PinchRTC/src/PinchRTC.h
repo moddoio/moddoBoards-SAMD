@@ -44,6 +44,21 @@ public:
     MATCH_YYMMDDHHMMSS = RTC_MODE2_MASK_SEL_YYMMDDHHMMSS_Val  // Once, on a specific date and a specific time
   };
 
+  // The SAMD11 RTC only emits periodic events (PERn), not interrupts, so the
+  // periodic interrupt is routed through EVSYS channel 0, which PinchRTC
+  // reserves. The value is n: frequency = 1024 Hz / 2^(n+3).
+  enum Periodic_Interval: uint8_t
+  {
+    PER_128HZ = 0,
+    PER_64HZ,
+    PER_32HZ,
+    PER_16HZ,
+    PER_8HZ,
+    PER_4HZ,
+    PER_2HZ,
+    PER_1HZ
+  };
+
   PinchRTC();
   void begin(bool resetTime = false);
 
@@ -52,6 +67,16 @@ public:
 
   void attachInterrupt(voidFuncPtr callback);
   void detachInterrupt();
+
+  void enablePeriodicInterrupt(Periodic_Interval interval);
+  void disablePeriodicInterrupt();
+
+  void attachPeriodicInterrupt(voidFuncPtr callback);
+  void detachPeriodicInterrupt();
+
+  // Configure GCLK2 as the shared 1024 Hz low-power clock (OSCULP32K / 32),
+  // running in standby. Also used by PinchLowPower for the EIC.
+  static void configureLowPowerClock(void);
 
   void standbyMode();
 
@@ -113,7 +138,6 @@ private:
   void normalizeTm(struct tm *t);
 
   void config32kOSC(void);
-  void configureClock(void);
   void RTCreadRequest();
   bool RTCisSyncing(void);
   void RTCdisable();

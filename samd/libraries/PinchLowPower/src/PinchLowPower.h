@@ -23,6 +23,7 @@
 #include "PinchRTC.h"
 
 #define RTC_ALARM_WAKEUP	0xFF
+#define RTC_PERIODIC_WAKEUP	0xFE
 
 /**
  * Deep-standby support for pinch.
@@ -33,12 +34,23 @@
  * left to the sketch so it can use an external pull resistor or INPUT_PULLUP.
  * The overload without a callback installs a safe no-op ISR that clears the
  * EIC flag after wake.
+ *
+ * attachInterruptWakeup(RTC_PERIODIC_WAKEUP, callback, interval) wakes the
+ * board on every RTC periodic tick, where interval is a
+ * PinchRTC::Periodic_Interval (128 Hz down to 1 Hz). Each sleep() then
+ * returns after the next tick, and sleep(millis) also returns early on a
+ * tick. Count ticks in the sketch for periods longer than 1 s.
+ * detachInterruptWakeup(RTC_PERIODIC_WAKEUP) stops the ticks.
+ *
+ * The RTC, EIC and EVSYS share GCLK2 at 1024 Hz, so pin pulses shorter than
+ * about 1 ms may be missed in standby.
  */
 class PinchLowPowerClass
 {
 public:
   bool attachInterruptWakeup(uint32_t pin, uint32_t mode = FALLING);
   bool attachInterruptWakeup(uint32_t pin, voidFuncPtr callback, uint32_t mode);
+  void detachInterruptWakeup(uint32_t pin);
 
   // Enter SAMD11 standby.
   void deepSleep();
@@ -56,6 +68,7 @@ private:
   void configureEicStandbyClock();
   void setAlarmIn(uint32_t millis);
   uint8_t wakeMask_ = 0;
+  bool periodicWake_ = false;
   PinchRTC rtc;
 };
 

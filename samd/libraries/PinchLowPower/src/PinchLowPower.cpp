@@ -20,8 +20,6 @@
 
 namespace
 {
-constexpr uint8_t kEicLowPowerGenerator = 2;
-
 // A callback is required so the core EIC handler clears INTFLAG after wake.
 // Supplying this fallback lets a sketch intentionally wake without work.
 void clearWakeInterrupt()
@@ -57,8 +55,23 @@ bool PinchLowPowerClass::attachInterruptWakeup(uint32_t pin,
     // check for external wakeup sources
     // RTC library should call this API to enable the alarm subsystem
     if (pin == RTC_ALARM_WAKEUP) {
-        rtc.begin(false);
+        if (!rtc.isConfigured()) {
+          rtc.begin(false);
+        }
         rtc.attachInterrupt(callback);
+        return true;
+    }
+    if (pin == RTC_PERIODIC_WAKEUP) {
+        // mode carries the PinchRTC::Periodic_Interval
+        if (mode > PinchRTC::PER_1HZ) {
+          return false;
+        }
+        if (!rtc.isConfigured()) {
+          rtc.begin(false);
+        }
+        rtc.attachPeriodicInterrupt(callback ? callback : clearWakeInterrupt);
+        rtc.enablePeriodicInterrupt(static_cast<PinchRTC::Periodic_Interval>(mode));
+        periodicWake_ = true;
         return true;
     }
     return false;
@@ -87,24 +100,23 @@ bool PinchLowPowerClass::attachInterruptWakeup(uint32_t pin,
   return true;
 }
 
+void PinchLowPowerClass::detachInterruptWakeup(uint32_t pin)
+{
+  if (pin == RTC_PERIODIC_WAKEUP) {
+    rtc.disablePeriodicInterrupt();
+    rtc.detachPeriodicInterrupt();
+    periodicWake_ = false;
+  }
+}
+
 void PinchLowPowerClass::configureEicStandbyClock()
 {
   PM->APBAMASK.reg |= PM_APBAMASK_EIC;
 
-  // The SAMD11 only implements GCLK0 through GCLK5. GCLK2 already uses the
-  // ultra-low-power 32 kHz oscillator for the watchdog, and can also clock
-  // the EIC while the CPU is in standby.
-  GCLK->GENDIV.reg = GCLK_GENDIV_ID(kEicLowPowerGenerator) |
-                     GCLK_GENDIV_DIV(1);
-  while (GCLK->STATUS.bit.SYNCBUSY) {
-  }
-
-  GCLK->GENCTRL.reg = GCLK_GENCTRL_ID(kEicLowPowerGenerator) |
-                      GCLK_GENCTRL_SRC_OSCULP32K |
-                      GCLK_GENCTRL_GENEN |
-                      GCLK_GENCTRL_RUNSTDBY;
-  while (GCLK->STATUS.bit.SYNCBUSY) {
-  }
+  // The SAMD11 only implements GCLK0 through GCLK5 and the core uses all but
+  // GCLK2. GCLK2 is shared with the RTC, which needs it at 1024 Hz, so the
+  // EIC runs from that same clock while the CPU is in standby.
+  PinchRTC::configureLowPowerClock();
 
   // Change the EIC's clock generator only while its generic clock is off.
   GCLK->CLKCTRL.reg = GCLK_CLKCTRL_ID(GCM_EIC);
@@ -147,6 +159,11 @@ void PinchLowPowerClass::deepSleep()
   // wake source can legitimately reassert after this point.
   EIC->INTFLAG.reg = wakeMask_;
   NVIC_ClearPendingIRQ(EIC_IRQn);
+
+  if (periodicWake_) {
+    EVSYS->INTFLAG.reg = EVSYS_INTFLAG_EVD0 | EVSYS_INTFLAG_OVR0;
+    NVIC_ClearPendingIRQ(EVSYS_IRQn);
+  }
 
   const uint32_t savedSysTick = SysTick->CTRL;
   const uint32_t savedScr = SCB->SCR;
