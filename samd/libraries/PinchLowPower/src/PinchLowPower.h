@@ -20,6 +20,11 @@
   #error "PinchLowPower is only supported by the moddo pinch board."
 #endif
 
+#include "PinchRTC.h"
+
+#define RTC_ALARM_WAKEUP	0xFF
+#define RTC_PERIODIC_WAKEUP	0xFE
+
 /**
  * Deep-standby support for pinch.
  *
@@ -29,22 +34,46 @@
  * left to the sketch so it can use an external pull resistor or INPUT_PULLUP.
  * The overload without a callback installs a safe no-op ISR that clears the
  * EIC flag after wake.
+ *
+ * attachInterruptWakeup(RTC_PERIODIC_WAKEUP, callback, interval) wakes the
+ * board on every RTC periodic tick, where interval is a
+ * PinchRTC::Periodic_Interval (128 Hz down to 1 Hz). Each sleep() then
+ * returns after the next tick, and sleep(millis) also returns early on a
+ * tick. Count ticks in the sketch for periods longer than 1 s.
+ * detachInterruptWakeup(RTC_PERIODIC_WAKEUP) stops the ticks.
+ *
+ * sleep(millis) counts whole RTC seconds: it rounds up to at least one, and
+ * the first is the rest of the current second, so it sleeps between
+ * seconds - 1 and seconds. Use RTC_PERIODIC_WAKEUP for shorter sleeps.
+ *
+ * The RTC, EIC and EVSYS share GCLK2 at 1024 Hz, so pin pulses shorter than
+ * about 1 ms may be missed in standby.
  */
 class PinchLowPowerClass
 {
 public:
   bool attachInterruptWakeup(uint32_t pin, uint32_t mode = FALLING);
   bool attachInterruptWakeup(uint32_t pin, voidFuncPtr callback, uint32_t mode);
+  void detachInterruptWakeup(uint32_t pin);
 
   // Enter SAMD11 standby.
   void deepSleep();
+  void deepSleep(uint32_t millis);
+  void deepSleep(int millis) {
+    deepSleep((uint32_t)millis);
+  }
 
   // Alias provided for sketches that prefer the ArduinoLowPower-style name.
-  void sleep() { return deepSleep(); }
+  void sleep() { deepSleep(); }
+  void sleep(uint32_t millis) { deepSleep(millis); }
+  void sleep(int millis) { deepSleep(millis); }
 
 private:
   void configureEicStandbyClock();
+  void setAlarmIn(uint32_t millis);
   uint8_t wakeMask_ = 0;
+  bool periodicWake_ = false;
+  PinchRTC rtc;
 };
 
 extern PinchLowPowerClass LowPower;
